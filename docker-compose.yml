@@ -1,14 +1,25 @@
 version: '3'
 
 services:
-  # JS app
-  # express:
-    # image: node:12
-  
+  frontend:
+    stdin_open: true
+    tty: true
+    build:
+      context: ./frontend
+      dockerfile: ./.docker/Dockerfile
+    container_name: frontend
+    command: yarn dev
+    ports:
+      - 5173:5173
+    volumes:
+      - ./frontend:/app
+      - node_modules:/app/node_modules
+
+
   foundry:
     build:
-      context: .
-      dockerfile: ./foundry/.docker/Dockerfile
+      context: ./foundry
+      dockerfile: ./.docker/Dockerfile
     container_name: foundry
     entrypoint: ["/bin/sh", "./.docker/entrypoint.sh"]
     restart: "no"
@@ -25,3 +36,7 @@ services:
     env_file: .env
     volumes:
       - ganache-data:/var/lib/ganache/data/
+
+volumes:
+  node_modules:
+  ganache-data:
