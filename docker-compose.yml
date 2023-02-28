@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  # JS app
+  # express:
+    # image: node:12
+  
+  foundry:
+    build:
+      context: .
+      dockerfile: ./foundry/.docker/Dockerfile
+    container_name: foundry
+    entrypoint: ["/bin/sh", "./.docker/entrypoint.sh"]
+    restart: "no"
+    volumes:
+      - ./foundry:/usr/src/app
+
+
+  ganache:
+    image: trufflesuite/ganache:latest
+    container_name: ganache
+    ports:
+      - 8545:8545
+    command: -d -a 100 -e 1000000 -f https://mainnet.infura.io/v3/$WEB3_INFURA_PROJECT_ID --database.dbPath /var/lib/ganache/data/ --wallet.accountKeysPath accounts.json
+    env_file: .env
+    volumes:
+      - ganache-data:/var/lib/ganache/data/
