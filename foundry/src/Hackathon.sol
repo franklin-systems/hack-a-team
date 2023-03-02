@@ -5,9 +5,9 @@ contract Hackathon{
 
     address public hackathonAdmin;
 
-    uint256 hackathonStartTime;
+    uint256 public hackathonStartTime;
 
-    uint256 hackathonEndTime;
+    uint256 public hackathonEndTime;
 
     uint8 numberOfTracks;
 
@@ -25,7 +25,9 @@ contract Hackathon{
     // Team struct (this design constrains team makeup, could be changed to allow any makeup)
     struct Team{
         address captainAddress;
-        address[2] developers;
+        // developers split into distinct members instead of array because of how solidity returns teams from function calls (doesn't return arrays)
+        address developer1;
+        address developer2;
         address designer;
         address productManager;
         uint8 track;
@@ -68,6 +70,11 @@ contract Hackathon{
         numberOfTracks = _numberOfTracks;
     }
 
+    // check if a hacker has been selected for a team 
+    function isOnTeam(address _hacker) external view returns(bool){
+        return hackersByAddress[_hacker].isOnTeam;
+    }
+
 
     // register as a captain 
     function registerAsCaptain(Skill _skill, uint8 _track) external returns(bool){
@@ -77,11 +84,11 @@ contract Hackathon{
         // check if hacker is already registered
         require(isHacker[msg.sender], "Hacker is already registered");
         // create a team struct, if track is zero, then the team is available for any track
-        Team memory newTeam = Team(msg.sender, [address(0), address(0)], address(0), address(0), _track, false);
+        Team memory newTeam = Team(msg.sender, address(0), address(0), address(0), address(0), _track, false);
         // add captain to team roles
         if(_skill == Skill.Developer){
             // add to developers list
-            newTeam.developers[0] = msg.sender;
+            newTeam.developer1 = msg.sender;
         }
         else if(_skill == Skill.Designer){
             // add to designers list
@@ -150,13 +157,13 @@ contract Hackathon{
         // check that hacker's skill is available on the team 
         if(hackersByAddress[_hacker].skill == Skill.Developer){
             // check that there is an open developer spot
-            require(teamsByAddress[msg.sender].developers[0] == address(0) || teamsByAddress[msg.sender].developers[1] == address(0), "Team is full");
+            require(teamsByAddress[msg.sender].developer1 == address(0) || teamsByAddress[msg.sender].developer2 == address(0), "Team is full");
             // add hacker to team
-            if(teamsByAddress[msg.sender].developers[0] == address(0)){
-                teamsByAddress[msg.sender].developers[0] = _hacker;
+            if(teamsByAddress[msg.sender].developer1 == address(0)){
+                teamsByAddress[msg.sender].developer1= _hacker;
             }
             else{
-                teamsByAddress[msg.sender].developers[1] = _hacker;
+                teamsByAddress[msg.sender].developer2 = _hacker;
             }
         }
         else if(hackersByAddress[_hacker].skill == Skill.Designer){
@@ -210,7 +217,7 @@ contract Hackathon{
         }
 
         // remove hacker from team by assigning to default team values
-        teamsByAddress[_hacker] = Team(address(0), [address(0), address(0)], address(0), address(0), 0, false);
+        teamsByAddress[_hacker] = Team(address(0), address(0), address(0), address(0), address(0), 0, false);
 
         return true;
     }
@@ -237,6 +244,7 @@ contract Hackathon{
         return true;
     }
 
+    // is winner, function that makes it easy to check if an individual hacker was part of a winning team
 
 }
 
