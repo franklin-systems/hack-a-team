@@ -1,0 +1,15 @@
+{
+  "name": "ceramic",
+  "version": "1.0.0",
+  "description": "Ceramic node setup",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@composedb/devtools": "^0.4.3",
+    "@composedb/devtools-node": "^0.4.3"
+  }
+}
