@@ -27,6 +27,18 @@ services:
       - ./foundry:/usr/src/app
 
 
+  ceramic:
+    build:
+      context: ./ceramic
+      dockerfile: ./.docker/Dockerfile
+    container_name: ceramic
+    command: npx @ceramicnetwork/cli daemon --config daemon.config.json
+    ports:
+      - 7007:7007
+    volumes:
+      - ceramic-data:/root/.ceramic/
+
+
   ganache:
     image: trufflesuite/ganache:latest
     container_name: ganache
@@ -40,3 +52,4 @@ services:
 volumes:
   node_modules:
   ganache-data:
+  ceramic-data:
