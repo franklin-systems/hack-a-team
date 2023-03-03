@@ -42,15 +42,6 @@ contract Hackathon{
     // get team from address
     mapping(address => Team) public teamsByCaptain;
 
-    // list of available developers
-    Hacker[] public developers;
-
-    // list of available designers
-    Hacker[] public designers;
-
-    // list of available product managers
-    Hacker[] public productManagers;
-
     // list of teams
     Team[] public teams;
 
@@ -106,18 +97,6 @@ contract Hackathon{
         numberOfHackers++;
         // add hacker to the mapping of registered hackers
         isHacker[msg.sender] = true;
-        if(_roll == Role.Developer){
-            // add to developers list
-            developers.push(newHacker);
-        }
-        else if(_roll == Role.Designer){
-            // add to designers list
-            designers.push(newHacker);
-        }
-        else if(_roll == Role.ProductManager){
-            // add to product managers list
-            productManagers.push(newHacker);
-        }
 
         // return something 
         return true;
@@ -182,20 +161,6 @@ contract Hackathon{
         // update hacker to reflect they are no longer on a team
         hackersByAddress[_hacker].teamCaptain = address(0);
 
-        // add them back to the list of available hackers 
-        if(hackersByAddress[_hacker].role == Role.Developer){
-            // add to developers list
-            developers.push(hackersByAddress[_hacker]);
-        }
-        else if(hackersByAddress[_hacker].role == Role.Designer){
-            // add to designers list
-            designers.push(hackersByAddress[_hacker]);
-        }
-        else if(hackersByAddress[_hacker].role == Role.ProductManager){
-            // add to product managers list
-            productManagers.push(hackersByAddress[_hacker]);
-        }
-
         // remove hacker from team by assigning to default team values
         teamsByCaptain[_hacker] = Team(address(0), address(0), address(0), address(0), address(0), false);
 
@@ -203,7 +168,7 @@ contract Hackathon{
     }
 
     // declare winners
-    function declareWinner(address _captain) external returns(bool){
+    function declareWinner(address _captain) external view returns(bool){
         // require the caller is the hackathonAdmin
         require(msg.sender == hackathonAdmin, "Caller is not the hackathon admin");
         // require that the hackathon has ended
