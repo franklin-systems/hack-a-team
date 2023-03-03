@@ -37,6 +37,7 @@ services:
     ports:
       - 7007:7007
     volumes:
+      - ./ceramic:/app
       - ceramic-data:/root/.ceramic/
 
 
