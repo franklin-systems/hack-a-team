@@ -9,17 +9,17 @@ contract Hackathon{
 
     uint256 public hackathonEndTime;
 
-    uint8 numberOfTracks;
+    uint256 numberOfHackers;
 
     
-    enum Skill {Developer, Designer, ProductManager}
+    enum Role {Developer, Designer, ProductManager}
 
     // Hacker Struct 
     struct Hacker {
-        address hackerAddress;
-        Skill skill;
-        uint8 track;
-        bool isOnTeam;
+        // pointer to team captin address, 0 if not on a team 
+        address teamCaptain;
+        // their role on the team 
+        Role role;
     }
 
     // Team struct (this design constrains team makeup, could be changed to allow any makeup)
@@ -30,7 +30,6 @@ contract Hackathon{
         address developer2;
         address designer;
         address productManager;
-        uint8 track;
         bool winner;
     }
     
@@ -41,13 +40,7 @@ contract Hackathon{
     mapping(address => Hacker) public hackersByAddress;
 
     // get team from address
-    mapping(address => Team) public teamsByAddress;
-
-    // track winners
-    mapping(uint8 => Team) public winnersByTrack;
-
-    // list of available hackers
-    Hacker[] public hackers;
+    mapping(address => Team) public teamsByCaptain;
 
     // list of available developers
     Hacker[] public developers;
@@ -61,70 +54,67 @@ contract Hackathon{
     // list of teams
     Team[] public teams;
 
-    // track the number of hackers in each track
-
-    constructor(uint256 _hackathonStartTime, uint256 _hackathonEndTime, uint8 _numberOfTracks){
+    constructor(uint256 _hackathonStartTime, uint256 _hackathonEndTime){
         hackathonAdmin = msg.sender;
         hackathonStartTime = _hackathonStartTime;
         hackathonEndTime = _hackathonEndTime;
-        numberOfTracks = _numberOfTracks;
     }
 
     // check if a hacker has been selected for a team 
     function isOnTeam(address _hacker) external view returns(bool){
-        return hackersByAddress[_hacker].isOnTeam;
+        return hackersByAddress[_hacker].teamCaptain != address(0) ? true : false;
     }
 
 
     // register as a captain 
-    function registerAsCaptain(Skill _skill, uint8 _track) external returns(bool){
-        // check if there are too many captains (can replace this with a variable that tracks the number of available hackers in a track or free agent)
-        // @audit this is too simple, need to check if there are enough hackers in the track
-        require(teams.length < hackers.length / 3, "Too many captains");
+    function registerAsCaptain(Role _roll) external returns(bool){
+        // check if there are too many captains 
+        require(teams.length < numberOfHackers / 3, "Too many captains");
         // check if hacker is already registered
         require(isHacker[msg.sender], "Hacker is already registered");
-        // create a team struct, if track is zero, then the team is available for any track
-        Team memory newTeam = Team(msg.sender, address(0), address(0), address(0), address(0), _track, false);
+        Team memory newTeam = Team(msg.sender, address(0), address(0), address(0), address(0), false);
         // add captain to team roles
-        if(_skill == Skill.Developer){
+        if(_roll == Role.Developer){
             // add to developers list
             newTeam.developer1 = msg.sender;
         }
-        else if(_skill == Skill.Designer){
+        else if(_roll == Role.Designer){
             // add to designers list
             newTeam.designer = msg.sender;
         }
-        else if(_skill == Skill.ProductManager){
+        else if(_roll == Role.ProductManager){
             // add to product managers list
             newTeam.productManager = msg.sender;
         }
         teams.push(newTeam);
 
         // add team to mapping of teams
-        teamsByAddress[msg.sender] = newTeam;
+        teamsByCaptain[msg.sender] = newTeam;
 
         return true;  
     }
 
     // register as a hacker for hire 
-    function registerAsHacker(Skill _skill, uint8 _track) external returns(bool){
+    function registerAsHacker(Role _roll) external returns(bool){
         // check if hacker is already registered
         require(!isHacker[msg.sender], "Hacker is already registered");
         // add hacker to hackers list
-        Hacker memory newHacker = Hacker(msg.sender, _skill, _track, false);
+        Hacker memory newHacker = Hacker(address(0), _roll);
+        // add hacker to mapping of hackers
+        hackersByAddress[msg.sender] = newHacker;
         // add new hacker to the array of available hackers 
-        hackers.push(newHacker);
+        numberOfHackers++;
         // add hacker to the mapping of registered hackers
         isHacker[msg.sender] = true;
-        if(_skill == Skill.Developer){
+        if(_roll == Role.Developer){
             // add to developers list
             developers.push(newHacker);
         }
-        else if(_skill == Skill.Designer){
+        else if(_roll == Role.Designer){
             // add to designers list
             designers.push(newHacker);
         }
-        else if(_skill == Skill.ProductManager){
+        else if(_roll == Role.ProductManager){
             // add to product managers list
             productManagers.push(newHacker);
         }
@@ -136,54 +126,44 @@ contract Hackathon{
     // select a team member 
     function selectTeamMember(address _hacker) external returns(bool){
         // requirer that caller is a captain
-        require(teamsByAddress[msg.sender].captainAddress == msg.sender, "Caller is not a captain");
+        require(teamsByCaptain[msg.sender].captainAddress == msg.sender, "Caller is not a captain");
 
         // check that hacker is registered
         require(isHacker[_hacker], "Hacker is not registered");
 
         // check that hacker is not already on a team
-        require(!hackersByAddress[_hacker].isOnTeam, "Hacker is already on a team");
-
-        // check that hacker is available
-        require(!hackersByAddress[_hacker].isOnTeam, "Hacker is not available");
-
-        // check that hacker is in the same track, if track is 0, then they are available for any track
-        require(
-            hackersByAddress[_hacker].track == teamsByAddress[msg.sender].track ||
-            hackersByAddress[_hacker].track ==0, 
-            "Hacker is not in the same track"
-        );
+        require(hackersByAddress[_hacker].teamCaptain != address(0), "Hacker is already on a team");
         
         // check that hacker's skill is available on the team 
-        if(hackersByAddress[_hacker].skill == Skill.Developer){
+        if(hackersByAddress[_hacker].role == Role.Developer){
             // check that there is an open developer spot
-            require(teamsByAddress[msg.sender].developer1 == address(0) || teamsByAddress[msg.sender].developer2 == address(0), "Team is full");
+            require(teamsByCaptain[msg.sender].developer1 == address(0) || teamsByCaptain[msg.sender].developer2 == address(0), "Team is full");
             // add hacker to team
-            if(teamsByAddress[msg.sender].developer1 == address(0)){
-                teamsByAddress[msg.sender].developer1= _hacker;
+            if(teamsByCaptain[msg.sender].developer1 == address(0)){
+                teamsByCaptain[msg.sender].developer1= _hacker;
             }
             else{
-                teamsByAddress[msg.sender].developer2 = _hacker;
+                teamsByCaptain[msg.sender].developer2 = _hacker;
             }
         }
-        else if(hackersByAddress[_hacker].skill == Skill.Designer){
+        else if(hackersByAddress[_hacker].role == Role.Designer){
             // check that there is an open designer spot
-            require(teamsByAddress[msg.sender].designer == address(0), "Team is full");
+            require(teamsByCaptain[msg.sender].designer == address(0), "Team is full");
             // add hacker to team
-            teamsByAddress[msg.sender].designer = _hacker;
+            teamsByCaptain[msg.sender].designer = _hacker;
         }
-        else if(hackersByAddress[_hacker].skill == Skill.ProductManager){
+        else if(hackersByAddress[_hacker].role == Role.ProductManager){
             // check that there is an open product manager spot
-            require(teamsByAddress[msg.sender].productManager == address(0), "Team is full");
+            require(teamsByCaptain[msg.sender].productManager == address(0), "Team is full");
             // add hacker to team
-            teamsByAddress[msg.sender].productManager = _hacker;
+            teamsByCaptain[msg.sender].productManager = _hacker;
         }
 
         // update hacker to reflect they are on a team
-        hackersByAddress[_hacker].isOnTeam = true;
+        hackersByAddress[_hacker].teamCaptain = msg.sender;
 
         // assign the hacker to the captain's team
-        teamsByAddress[_hacker] = teamsByAddress[msg.sender];
+        teamsByCaptain[_hacker] = teamsByCaptain[msg.sender];
 
         return true;
     }
@@ -194,52 +174,43 @@ contract Hackathon{
         require(block.timestamp < hackathonStartTime, "Conference has started, cannot remove team member");
 
         // requirer that caller is a captain
-        require(teamsByAddress[msg.sender].captainAddress == msg.sender, "Caller is not a captain");
+        require(teamsByCaptain[msg.sender].captainAddress == msg.sender, "Caller is not a captain");
 
         // check that hacker is on the caller's team
-        require(teamsByAddress[_hacker].captainAddress == msg.sender, "Hacker is not on the caller's team");
+        require(teamsByCaptain[_hacker].captainAddress == msg.sender, "Hacker is not on the caller's team");
 
         // update hacker to reflect they are no longer on a team
-        hackersByAddress[_hacker].isOnTeam = false;
+        hackersByAddress[_hacker].teamCaptain = address(0);
 
         // add them back to the list of available hackers 
-        if(hackersByAddress[_hacker].skill == Skill.Developer){
+        if(hackersByAddress[_hacker].role == Role.Developer){
             // add to developers list
             developers.push(hackersByAddress[_hacker]);
         }
-        else if(hackersByAddress[_hacker].skill == Skill.Designer){
+        else if(hackersByAddress[_hacker].role == Role.Designer){
             // add to designers list
             designers.push(hackersByAddress[_hacker]);
         }
-        else if(hackersByAddress[_hacker].skill == Skill.ProductManager){
+        else if(hackersByAddress[_hacker].role == Role.ProductManager){
             // add to product managers list
             productManagers.push(hackersByAddress[_hacker]);
         }
 
         // remove hacker from team by assigning to default team values
-        teamsByAddress[_hacker] = Team(address(0), address(0), address(0), address(0), address(0), 0, false);
+        teamsByCaptain[_hacker] = Team(address(0), address(0), address(0), address(0), address(0), false);
 
         return true;
     }
 
-    // declare winners of a track 
-    function declareTrackWinner(address _captain, uint8 _track) external returns(bool){
+    // declare winners
+    function declareWinner(address _captain) external returns(bool){
         // require the caller is the hackathonAdmin
         require(msg.sender == hackathonAdmin, "Caller is not the hackathon admin");
         // require that the hackathon has ended
         require(block.timestamp > hackathonEndTime, "Hackathon has not ended yet");
 
         // require that the captain is on a team
-        require(teamsByAddress[_captain].captainAddress == _captain, "Address not associated with a team");
-
-        // require that the track does not already have a winner 
-        require(winnersByTrack[_track].captainAddress == address(0), "Track already has a winner");
-
-        // require that the team is in the correct track
-        require(teamsByAddress[_captain].track == _track, "Team is not in the correct track");
-
-        // declare the team the winner of the track 
-        winnersByTrack[_track] = teamsByAddress[_captain];
+        require(teamsByCaptain[_captain].captainAddress == _captain, "Address not associated with a team");
 
         return true;
     }
