@@ -8,6 +8,7 @@ services:
       context: ./frontend
       dockerfile: ./.docker/Dockerfile
     container_name: frontend
+    entrypoint: ["/bin/sh", "./.docker/entrypoint.sh"]
     command: yarn dev
     ports:
       - 5173:5173
