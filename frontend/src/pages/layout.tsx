@@ -18,11 +18,11 @@ export default function Layout() {
     const provider = useProvider()
     const account = await provider.send('eth_requestAccounts', [])
 
-    if (account.result.length) {
-      setWallet(account.result[0])
+    if (account.length) {
+      setWallet(account[0])
     }
   }
-  
+
   useEffect(() => {
     checkConnection()
     setInterval(checkConnection, 1000)
