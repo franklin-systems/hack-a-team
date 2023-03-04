@@ -46,7 +46,8 @@ services:
       context: ./ceramic
       dockerfile: ./.docker/Dockerfile
     container_name: graphql
-    command: composedb graphql:server --ceramic-url=http://ceramic:7007 --graphiql composites/runtime-composite.json --did-private-key=075145b34b7e8736c710b705a628563d591a754dadd37bb5ce36e06a94615116 --port=5005
+    command: composedb graphql:server --ceramic-url=http://ceramic:7007 --graphiql composites/runtime-composite.json --did-private-key=$COMPOSEDB_PRIVATE_KEY --port=5005
+    env_file: .env
     ports:
       - 5005:5005
     volumes:
