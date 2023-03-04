@@ -53,7 +53,7 @@ contract Hackathon{
 
     // check if a hacker has been selected for a team 
     function isOnTeam(address _hacker) external view returns(bool){
-        return hackersByAddress[_hacker].teamCaptain != address(0) ? true : false;
+        return hackersByAddress[_hacker].teamCaptain != address(0);
     }
 
 
@@ -62,7 +62,7 @@ contract Hackathon{
         // check if there are too many captains 
         require(teams.length < numberOfHackers / 3, "Too many captains");
         // check if hacker is already registered
-        require(isHacker[msg.sender], "Hacker is already registered");
+        require(isHacker[msg.sender] == false, "Hacker is already registered");
         Team memory newTeam = Team(msg.sender, address(0), address(0), address(0), address(0), false);
         // add captain to team roles
         if(_roll == Role.Developer){
@@ -81,6 +81,12 @@ contract Hackathon{
 
         // add team to mapping of teams
         teamsByCaptain[msg.sender] = newTeam;
+        // create hacker profile 
+        Hacker memory newHacker = Hacker(msg.sender, _roll);
+        // add hacker to mapping of hackers
+        hackersByAddress[msg.sender] = newHacker;
+        // add new hacker to the array of hackers
+        isHacker[msg.sender] = true;
 
         return true;  
     }
