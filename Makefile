@@ -22,5 +22,8 @@ compile-schema:
 remove-volumes:
 	docker compose down -v
 
+seed:
+	docker compose exec frontend yarn seed
+
 up:
 	docker compose up
