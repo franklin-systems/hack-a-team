@@ -1,17 +1,51 @@
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom"
+import { ethers } from "ethers"
+import { useProvider } from "../hooks/useProvider"
+import { shortWallet } from "utils/wallet";
+
 
 export default function Layout() {
+  const [wallet, setWallet] = useState<string | null>(null)
+
+  async function checkConnection() {
+    const provider = useProvider()
+    const accounts = await provider.listAccounts()
+    setWallet(accounts[0])
+  }
+
+  async function connect() {
+    const provider = useProvider()
+    const account = await provider.send('eth_requestAccounts', [])
+
+    if (account.result.length) {
+      setWallet(account.result[0])
+    }
+  }
+  
+  useEffect(() => {
+    checkConnection()
+    setInterval(checkConnection, 1000)
+  }, [])
+
+
   return (
     <div className="min-h-screen isolate bg-gray-900">
       { gradientBackground() }
 
       <div className="px-6 pt-6 lg:px-8">
         <nav className="flex items-center justify-between" aria-label="Global">
-          <div className="flex lg:flex-1">
+          <div className="flex p-2 rounded-xl bg-black">
             <a href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Franklin Hack-a-Team</span>
-              <img className="h-20 rounded-xl" src="https://user-images.githubusercontent.com/1410181/221963178-ebddf3f7-1361-42b0-91dd-ea73a1412715.png" alt="" />
+              <img className="h-20" src="https://user-images.githubusercontent.com/1410181/221963178-ebddf3f7-1361-42b0-91dd-ea73a1412715.png" alt="" />
             </a>
+          </div>
+          <div className="flex items-center">
+            {!wallet && <button onClick={connect} className="p-1.5 rounded-md text-white focus:ring-2 focus:ring-white bg-purple-700">
+              Connect Wallet
+            </button>}
+            {wallet && <div className="flex items-center bg-purple-700 text-white p-2 rounded-md">{shortWallet(wallet)}</div>}
           </div>
         </nav>
       </div>
