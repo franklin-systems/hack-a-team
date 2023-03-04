@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom"
-import { ethers } from "ethers"
 import { useProvider } from "../hooks/useProvider"
+import { useAuth } from "utils/auth";
 import { shortWallet } from "utils";
 
 
 export default function Layout() {
-  const [wallet, setWallet] = useState<string | null>(null)
+  let auth = useAuth();
 
   async function checkConnection() {
     const provider = useProvider()
     const accounts = await provider.listAccounts()
-    setWallet(accounts[0])
+    auth.setWallet(accounts[0])
   }
 
   async function connect() {
@@ -19,7 +19,7 @@ export default function Layout() {
     const account = await provider.send('eth_requestAccounts', [])
 
     if (account.length) {
-      setWallet(account[0])
+      auth.setWallet(account[0])
     }
   }
 
@@ -42,10 +42,10 @@ export default function Layout() {
             </a>
           </div>
           <div className="flex items-center">
-            {!wallet && <button onClick={connect} className="p-1.5 rounded-md text-white focus:ring-2 focus:ring-white bg-purple-700">
+            {!auth.wallet && <button onClick={connect} className="p-1.5 rounded-md text-white focus:ring-2 focus:ring-white bg-purple-700">
               Connect Wallet
             </button>}
-            {wallet && <div className="flex items-center bg-purple-700 text-white p-2 rounded-md">{shortWallet(wallet)}</div>}
+            {auth.wallet && <div className="flex items-center bg-purple-700 text-white p-2 rounded-md">{shortWallet(auth.wallet)}</div>}
           </div>
         </nav>
       </div>

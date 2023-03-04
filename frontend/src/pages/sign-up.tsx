@@ -11,10 +11,14 @@ export default function SignUp() {
 
     let formData = new FormData(event.currentTarget);
 
-    auth.signin(formData.get("name") as string, () => {
-      console.log("Signed in!")
-      navigate("/active")
-    })
+    if (auth.wallet) {
+      auth.signin(formData.get("name") as string, () => {
+        console.log("Signed in!")
+        navigate("/active")
+      })
+    } else {
+      alert("Please connect your wallet first.")
+    }
   }
 
   return (
