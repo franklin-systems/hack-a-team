@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom"
 
 export default function Layout() {
   return (
-    <div className="h-screen isolate bg-gray-900">
+    <div className="min-h-screen isolate bg-gray-900">
       { gradientBackground() }
 
       <div className="px-6 pt-6 lg:px-8">
@@ -15,7 +15,7 @@ export default function Layout() {
           </div>
         </nav>
       </div>
-      <main>
+      <main className="max-w-4xl mx-auto p-12">
         {/* Render active route, defined in Router */}
         <Outlet />
       </main>
