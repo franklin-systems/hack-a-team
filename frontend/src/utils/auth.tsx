@@ -6,12 +6,15 @@ interface AuthContextType {
   user: any;
   signin: (user: string, callback: VoidFunction) => void;
   signout: (callback: VoidFunction) => void;
+  wallet: string;
+  setWallet: (wallet: string) => void;
 }
 
 let AuthContext = React.createContext<AuthContextType>(null!);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   let [user, setUser] = React.useState(getCookie("user"));
+  let [wallet, setWallet] = React.useState(getCookie("wallet"));
 
   let signin = (newUser: string, callback: VoidFunction) => {
     // set user in cookie so it can be found on load
@@ -26,7 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     callback();
   };
 
-  let value = { user, signin, signout };
+  let value = { user, signin, signout, wallet, setWallet };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
