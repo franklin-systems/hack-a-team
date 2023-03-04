@@ -17,3 +17,6 @@ out/
 
 # Docs
 docs/
+
+# Ganache accounts
+accounts.json
