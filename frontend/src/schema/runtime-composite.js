@@ -1,0 +1,2 @@
+// This is an auto-generated file, do not edit manually
+export const definition = {"models":{"HackathonProfile":{"id":"kjzl6hvfrbw6c6gocgeqntxuzyt88nqx077dam05yyjy7yuoz7y7n33h37yrgii","accountRelation":{"type":"list"}}},"objects":{"HackathonProfile":{"name":{"type":"string","required":true}}},"enums":{},"accountData":{"hackathonProfileList":{"type":"connection","name":"HackathonProfile"}}}
