@@ -3,6 +3,9 @@ export $(shell sed 's/=.*//' .env)
 
 COMPOSEDB = docker compose run ceramic composedb
 
+down:
+	docker compose down
+
 export-accounts:
 	docker exec ganache cat accounts.json > accounts.json
 
@@ -15,3 +18,9 @@ compile-schema:
 	$(COMPOSEDB) composite:compile schema/hackathon.json schema/runtime-composite.json --ceramic-url=http://ceramic:7007
 	$(COMPOSEDB) composite:compile schema/hackathon.json schema/runtime-composite.js --ceramic-url=http://ceramic:7007
 	mv ceramic/schema/runtime-composite.js frontend/src/schema/runtime-composite.js
+
+remove-volumes:
+	docker compose down -v
+
+up:
+	docker compose up
