@@ -1,3 +1,3 @@
-type HackathonProfile @createModel(accountRelation: LIST, description: "Hackathon Profile for ETHDenver 2023") {
+type HackathonProfile @createModel(accountRelation: SINGLE, description: "Hackathon Profile for ETHDenver 2023") {
   name: String! @string(minLength: 1, maxLength: 100)
 }
