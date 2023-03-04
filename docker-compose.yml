@@ -2,13 +2,12 @@ version: '3'
 
 services:
   frontend:
-    stdin_open: true
-    tty: true
     build:
       context: ./frontend
       dockerfile: ./.docker/Dockerfile
     container_name: frontend
     entrypoint: ["/bin/sh", "./.docker/entrypoint.sh"]
+    env_file: .env
     command: yarn dev
     ports:
       - 5173:5173
