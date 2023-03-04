@@ -63,6 +63,7 @@ contract Hackathon{
         require(teams.length < numberOfHackers / 3, "Too many captains");
         // check if hacker is already registered
         require(isHacker[msg.sender] == false, "Hacker is already registered");
+
         Team memory newTeam = Team(msg.sender, address(0), address(0), address(0), address(0), false);
         // add captain to team roles
         if(_roll == Role.Developer){
@@ -200,3 +201,4 @@ contract Hackathon{
         return winner;
     }
 }
+
