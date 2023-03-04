@@ -1,12 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom"
 import { useProvider } from "../hooks/useProvider"
 import { useAuth } from "utils/auth";
 import { shortWallet } from "utils";
 
-
 export default function Layout() {
   let auth = useAuth();
+  let navigate = useNavigate();
 
   async function checkConnection() {
     const provider = useProvider()
@@ -21,6 +22,13 @@ export default function Layout() {
     if (account.length) {
       auth.setWallet(account[0])
     }
+  }
+
+  const signout = () => {
+    auth.signout(() => {
+      console.log('signed out')
+      navigate('/')
+    })
   }
 
   useEffect(() => {
@@ -41,11 +49,18 @@ export default function Layout() {
               <img className="h-20" src="https://user-images.githubusercontent.com/1410181/221963178-ebddf3f7-1361-42b0-91dd-ea73a1412715.png" alt="" />
             </a>
           </div>
-          <div className="flex items-center">
-            {!auth.wallet && <button onClick={connect} className="p-1.5 rounded-md text-white focus:ring-2 focus:ring-white bg-purple-700">
-              Connect Wallet
-            </button>}
-            {auth.wallet && <div className="flex items-center bg-purple-700 text-white p-2 rounded-md">{shortWallet(auth.wallet)}</div>}
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center">
+              {!auth.wallet && <button onClick={connect} className="p-4 rounded-md text-white focus:ring-2 focus:ring-white bg-purple-700">
+                Connect Wallet
+              </button>}
+              {auth.wallet && <div className="flex items-center bg-purple-700 text-white p-4 rounded-md">{shortWallet(auth.wallet)}</div>}
+            </div>
+            <button type="button" onClick={signout}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="w-8 h-8">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+              </svg>
+            </button>
           </div>
         </nav>
       </div>
