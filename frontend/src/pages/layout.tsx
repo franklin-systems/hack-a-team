@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom"
 import { ethers } from "ethers"
 import { useProvider } from "../hooks/useProvider"
-import { shortWallet } from "utils/wallet";
+import { shortWallet } from "utils";
 
 
 export default function Layout() {
