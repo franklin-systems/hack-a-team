@@ -14,6 +14,8 @@ async function main() {
     const contract = await hackathon.deploy(startTime, endTime);
     
     console.log('\nHackathon contract deployed to:', contract.address, '\n');
+    
+    process.env["HACKATHON_CONTRACT_ADDRESS"] = contract.address;
 }
 
 main();
