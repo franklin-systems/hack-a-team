@@ -16,7 +16,6 @@ services:
       - ./frontend:/app
       - node_modules:/app/node_modules
 
-
   foundry:
     build:
       context: ./foundry
