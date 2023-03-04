@@ -1081,7 +1081,7 @@
     multihashes "^4.0.3"
     uint8arrays "^4.0.3"
 
-"@ceramicnetwork/stream-tile@^2.19.0":
+"@ceramicnetwork/stream-tile@^2.16.0", "@ceramicnetwork/stream-tile@^2.19.0":
   version "2.19.0"
   resolved "https://registry.yarnpkg.com/@ceramicnetwork/stream-tile/-/stream-tile-2.19.0.tgz#1bc157314f28b6117287151f9d5d168c05e09d89"
   integrity sha512-iPVjWAIaRaYJuwkY3etljdPciePzOuGijBoXzQ4frL/MxKaAWosyTgloJvhTt0zohzr11WGgoCNqupQ3Mm0Xuw==
@@ -1180,6 +1180,16 @@
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@didtools/pkh-ethereum/-/pkh-ethereum-0.1.0.tgz#fc55d341ca043cf959651e603cc2eafde8ebf1fc"
   integrity sha512-Abmc6uvWU8zkOrQbPUAsRtTW293vhx+rzd+/bbduTLrRGEqZ3niakQkxMqvQKZ6/9w+n0IjQVXSHE5vzc5cAeg==
+  dependencies:
+    "@didtools/cacao" "^2.0.0"
+    "@ethersproject/wallet" "^5.7.0"
+    "@stablelib/random" "^1.0.2"
+    caip "^1.1.0"
+
+"@didtools/pkh-ethereum@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@didtools/pkh-ethereum/-/pkh-ethereum-0.2.1.tgz#8c03a56f34c824fa83db6161362f7fa45dd2b5e9"
+  integrity sha512-apQefbOqqy8HQMDNVG0ITxHLr9I5iZrjADX+mPB+ie1ue8MO8pOHMifLQ3j0R6RjS2einCd+hEZ4Ib4AKs3Xlw==
   dependencies:
     "@didtools/cacao" "^2.0.0"
     "@ethersproject/wallet" "^5.7.0"
@@ -2586,6 +2596,11 @@ bech32@^2.0.0:
   resolved "https://registry.yarnpkg.com/bech32/-/bech32-2.0.0.tgz#078d3686535075c8c79709f054b1b226a133b355"
   integrity sha512-LcknSilhIGatDAsY1ak2I8VtGaHNhgMSYVxFrGLXv+xLHytaKZKcaUJJUE7qmBr7h33o5YQwP55pMI0xmkpJwg==
 
+bigint-mod-arith@^3.1.0:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/bigint-mod-arith/-/bigint-mod-arith-3.1.2.tgz#658e416bc593a463d97b59766226d0a3021a76b1"
+  integrity sha512-nx8J8bBeiRR+NlsROFH9jHswW5HO8mgfOSqW0AmjicMMvaONDa8AO+5ViKDUUNytBPWiwfvZP4/Bj4Y3lUfvgQ==
+
 binary-extensions@^2.0.0:
   version "2.2.0"
   resolved "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz"
@@ -2934,6 +2949,18 @@ did-resolver@^4.0.0, did-resolver@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/did-resolver/-/did-resolver-4.0.1.tgz#11bb3f19ed1c8f53f4af4702912fa9f7852fc305"
   integrity sha512-eHs2VLKhcANmh08S87PKvOauIAmSOd7nb7AlhNxcvOyDAIGQY1UfbiqI1VOW5IDKvOO6aEWY+5edOt1qrCp1Eg==
+
+did-session@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/did-session/-/did-session-2.0.0.tgz#b2f712e61302494c52bd8a1e05cb84a5b9b0ffdf"
+  integrity sha512-MxCCg+g0NyJOL7086VUgxDhcRv5vYOXiWaTCbuClCVbTz5H8LS+JzhGvURDLTGQhZGC6FyGb5kCenwWq7YNKQQ==
+  dependencies:
+    "@ceramicnetwork/stream-tile" "^2.16.0"
+    "@stablelib/random" "^1.0.1"
+    dids "^4.0.0"
+    key-did-provider-ed25519 "^3.0.0"
+    key-did-resolver "^3.0.0"
+    uint8arrays "^4.0.3"
 
 dids@^4.0.0:
   version "4.0.0"
@@ -3387,7 +3414,7 @@ fast-json-patch@^3.1.0:
   resolved "https://registry.yarnpkg.com/fast-json-patch/-/fast-json-patch-3.1.1.tgz#85064ea1b1ebf97a3f7ad01e23f9337e72c66947"
   integrity sha512-vf6IHUX2SBcA+5/+4883dsIjpBTqmfBjmYiWK1savxQmFk4JfBMLa7ynTYOs1Rolp/T1betJxHiGD3g1Mn8lUQ==
 
-fast-json-stable-stringify@^2.0.0:
+fast-json-stable-stringify@^2.0.0, fast-json-stable-stringify@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/fast-json-stable-stringify/-/fast-json-stable-stringify-2.1.0.tgz"
   integrity sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==
@@ -4058,6 +4085,30 @@ jsonc-parser@^3.2.0:
     array-includes "^3.1.5"
     object.assign "^4.1.3"
 
+key-did-provider-ed25519@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/key-did-provider-ed25519/-/key-did-provider-ed25519-3.0.0.tgz#7ab97249280baba699f92273a9768d533bfea3c4"
+  integrity sha512-cY2vjJZ16VZ7IZUDj15ldhxPFJlP2UjniUUv1NO8FptUOWSJUnOyzK68ipSIaHxsGvETjHKlfIJ0dGb0ernkSA==
+  dependencies:
+    "@stablelib/ed25519" "^1.0.2"
+    did-jwt "^6.11.1"
+    dids "^4.0.0"
+    fast-json-stable-stringify "^2.1.0"
+    rpc-utils "^0.6.2"
+    uint8arrays "^4.0.3"
+
+key-did-resolver@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/key-did-resolver/-/key-did-resolver-3.0.0.tgz#c1cc4ebeb41e7959db5d4f3d90fd96bf89507315"
+  integrity sha512-IyEq64AdS6lUwtn3YSvGpu7KAGA2x5+fjRCUIa8+ccSLmWrODV/ICM5aa6hHV/19EPWef8/e322r9sQJJ6/3qA==
+  dependencies:
+    "@stablelib/ed25519" "^1.0.2"
+    bigint-mod-arith "^3.1.0"
+    multiformats "^11.0.1"
+    nist-weierstrauss "^1.6.1"
+    uint8arrays "^4.0.3"
+    varint "^6.0.0"
+
 levn@^0.4.1:
   version "0.4.1"
   resolved "https://registry.npmjs.org/levn/-/levn-0.4.1.tgz"
@@ -4261,6 +4312,14 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
+
+nist-weierstrauss@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/nist-weierstrauss/-/nist-weierstrauss-1.6.1.tgz#ce1acd81d09f83289bc5113f14c9790920935176"
+  integrity sha512-FpjCOnPV/s3ZVIkeldCVSml2K4lruabPbBgoEitpCK1JL0KTVoWb56CFTU6rZn5i6VqAjdwcOp0FDwJACPmeFA==
+  dependencies:
+    multiformats "^9.6.5"
+    uint8arrays "^2.1.4"
 
 node-fetch@2.6.7:
   version "2.6.7"
@@ -4770,7 +4829,7 @@ rollup@^3.10.0:
   optionalDependencies:
     fsevents "~2.3.2"
 
-rpc-utils@^0.6.1:
+rpc-utils@^0.6.1, rpc-utils@^0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/rpc-utils/-/rpc-utils-0.6.2.tgz#3cab779f93048eda69ff198c58b1a2c2e35e3fa6"
   integrity sha512-kzk1OflbBckfDBAo8JwsmtQSHzj+6hxRt5G+u8A8ZSmunBw1nhWvRkSq8j1+EvWBqBRLy1aiGLUW5644CZqQtA==
@@ -5159,6 +5218,13 @@ ufo@^1.1.0:
   version "1.1.1"
   resolved "https://registry.npmjs.org/ufo/-/ufo-1.1.1.tgz"
   integrity sha512-MvlCc4GHrmZdAllBc0iUDowff36Q9Ndw/UzqmEKyrfSzokTd9ZCy1i+IIk5hrYKkjoYVQyNbrw7/F8XJ2rEwTg==
+
+uint8arrays@^2.1.4:
+  version "2.1.10"
+  resolved "https://registry.yarnpkg.com/uint8arrays/-/uint8arrays-2.1.10.tgz#34d023c843a327c676e48576295ca373c56e286a"
+  integrity sha512-Q9/hhJa2836nQfEJSZTmr+pg9+cDJS9XEAp7N2Vg5MzL3bK/mkMVfjscRGYruP9jNda6MAdf4QD/y78gSzkp6A==
+  dependencies:
+    multiformats "^9.4.2"
 
 uint8arrays@^3.0.0:
   version "3.1.1"
