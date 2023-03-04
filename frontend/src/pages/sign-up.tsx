@@ -1,19 +1,22 @@
-function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-  event.preventDefault()
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "utils/auth";
 
-  // log serialized form data
-  console.log(
-    Array.from(new FormData(event.currentTarget)).reduce(
-      (acc, [key, value]) => ({
-        ...acc,
-        [key]: value,
-      }),
-      {}
-    )
-  )
-}
 
 export default function SignUp() {
+  let auth = useAuth();
+  let navigate = useNavigate();
+
+  const onSubmit = function(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    let formData = new FormData(event.currentTarget);
+
+    auth.signin(formData.get("name") as string, () => {
+      console.log("Signed in!")
+      navigate("/active")
+    })
+  }
+
   return (
     <form className="space-y-8" onSubmit={onSubmit}>
       <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
