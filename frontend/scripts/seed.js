@@ -15,8 +15,8 @@ async function main() {
     const contract = await hackathon.deploy(startTime, endTime);
     console.log('\nHackathon contract deployed to:', contract.address, '\n');
 
-    // Seed hackathon contract with hackers 
-    // Developer1 
+    // Seed hackathon contract with hackers
+    // Developer1
     const developer1 = new ethers.Wallet("0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c", provider);
     const nonce1 = await provider.getTransactionCount(developer1.address);
     tx = {
@@ -24,19 +24,19 @@ async function main() {
         chainId: 1337,
         nonce: nonce1,
         maxPriorityFeePerGas: 1000000000,
-        maxFeePerGas: 1000000000,
+        maxFeePerGas: 100000000000,
         gasPrice: null,
         gasLimit: 1000000,
         to: contract.address,
         value: 0,
         data: "0x7e101f780000000000000000000000000000000000000000000000000000000000000000",
         from: developer1.address,
-    } 
+    }
     const signature1 = await developer1.signTransaction(tx);
     const submittedTx1 = await provider.sendTransaction(signature1);
     const registeredCorrectly1 = await contract.isHacker(developer1.address);
     console.log('Registered as dev1?', registeredCorrectly1);
-    
+
     // Developer2
     const developer2 = new ethers.Wallet("0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1", provider);
     tx.from = developer2.address;
@@ -105,7 +105,7 @@ async function main() {
 
     const registeredCorrectly7 = await contract.hackersByAddress(product1.address);
     console.log('Registered as product1?', registeredCorrectly7);
-    
+
     // ProductManager2
     const product2 = new ethers.Wallet("0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4", provider);
     tx.data = "0x7e101f780000000000000000000000000000000000000000000000000000000000000002";
@@ -119,7 +119,7 @@ async function main() {
     console.log('Registered as product2?', registeredCorrectly8);
 
     // ProductManager3
-    const product3 = new ethers.Wallet("0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4", provider);
+    const product3 = new ethers.Wallet("0xb0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773", provider);
     tx.data = "0x7e101f780000000000000000000000000000000000000000000000000000000000000002";
     tx.from = product3.address;
     const nonce9 = await provider.getTransactionCount(product3.address);
