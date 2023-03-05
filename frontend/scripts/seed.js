@@ -15,8 +15,8 @@ async function main() {
     const contract = await hackathon.deploy(startTime, endTime);
     console.log('\nHackathon contract deployed to:', contract.address, '\n');
 
-    // Seed hackathon contract with hackers 
-    // Developer1 
+    // Seed hackathon contract with hackers
+    // Developer1
     const developer1 = new ethers.Wallet("0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c", provider);
     const nonce1 = await provider.getTransactionCount(developer1.address);
     tx = {
@@ -24,19 +24,19 @@ async function main() {
         chainId: 1337,
         nonce: nonce1,
         maxPriorityFeePerGas: 1000000000,
-        maxFeePerGas: 1000000000,
+        maxFeePerGas: 100000000000,
         gasPrice: null,
         gasLimit: 1000000,
         to: contract.address,
         value: 0,
         data: "0x7e101f780000000000000000000000000000000000000000000000000000000000000000",
         from: developer1.address,
-    } 
+    }
     const signature1 = await developer1.signTransaction(tx);
     const submittedTx1 = await provider.sendTransaction(signature1);
     const registeredCorrectly1 = await contract.hackersByAddress(developer1.address);
     console.log('Registered as dev1?', registeredCorrectly1);
-    
+
     // Developer2
     const developer2 = new ethers.Wallet("0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1", provider);
     tx.from = developer2.address;
