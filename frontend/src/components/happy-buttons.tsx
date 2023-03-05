@@ -9,8 +9,6 @@ async function handleClick(event) {
           node {
             wallet
             skills
-            strengths
-            weaknesses
           }
         }
       }

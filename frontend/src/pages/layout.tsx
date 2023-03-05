@@ -1,9 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom"
 import { useProvider } from "../hooks/useProvider"
 import { useAuth } from "utils/auth";
 import { shortWallet } from "utils";
+import { useHackthon } from "hooks/useHackathon";
 
 export default function Layout() {
   let auth = useAuth();
