@@ -15,7 +15,7 @@ async function main() {
     
     console.log('\nHackathon contract deployed to:', contract.address, '\n');
     
-    process.env["HACKATHON_CONTRACT_ADDRESS"] = contract.address;
+    console.log('Set this address as an env var named VITE_HACKATHON_CONTRACT_ADDRESS in .env\n')
 }
 
 main();
