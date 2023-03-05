@@ -1,0 +1,221 @@
+mutation CreateNewHackathonProfile($a: CreateHackathonProfileInput!, $b: CreateHackathonProfileInput!, $c: CreateHackathonProfileInput!, $d: CreateHackathonProfileInput!, $e: CreateHackathonProfileInput!, $f: CreateHackathonProfileInput!, $g: CreateHackathonProfileInput!, $h: CreateHackathonProfileInput!, $i: CreateHackathonProfileInput!, $j: CreateHackathonProfileInput!, $k: CreateHackathonProfileInput!, $l: CreateHackathonProfileInput!){
+  createA: createHackathonProfile(input: $a){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createB: createHackathonProfile(input: $b){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createC: createHackathonProfile(input: $c){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createD: createHackathonProfile(input: $d){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createE: createHackathonProfile(input: $e){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createF: createHackathonProfile(input: $f){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createG: createHackathonProfile(input: $g){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createH: createHackathonProfile(input: $h){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createI: createHackathonProfile(input: $i){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createJ: createHackathonProfile(input: $j){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createK: createHackathonProfile(input: $k){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createL: createHackathonProfile(input: $l){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+}
+
+{
+"a": {
+  "content": {
+    "name": "Developer Alice",
+    "wallet": "0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0",
+    "skills": ["Rust, Solidity, Baking"],
+    "role": "HACKER",
+    "teamRole": "DEVELOPER"
+  }
+},
+  "b": {
+    "content": {
+      "name": "Developer Bob",
+      "wallet": "0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b",
+      "skills": ["Go, Buidling, Sending degens to the moon"],
+      "role": "HACKER",
+      "teamRole": "DEVELOPER"
+    }
+  },
+  "c": {
+    "content": {
+      "name": "Developer Carly",
+      "wallet": "0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d",
+      "skills": ["Moving mountains, getting shit done, coding maybe"],
+      "role": "HACKER",
+      "teamRole": "DEVELOPER"
+    }
+  },
+  "d": {
+    "content": {
+      "name": "Developer Darnell",
+      "wallet": "0xd03ea8624C8C5987235048901fB614fDcA89b117",
+      "skills": ["Pretending to work, roasting crypto bros on the bird"],
+      "role": "HACKER",
+      "teamRole": "DEVELOPER"
+    }
+  },
+  "e": {
+    "content": {
+      "name": "Developer Erica",
+      "wallet": "0x95cED938F7991cd0dFcb48F0a06a40FA1aF46EBC",
+      "skills": ["Literally every Javascript ever developed"],
+      "role": "HACKER",
+      "teamRole": "DEVELOPER"
+    }
+  },
+  "f": {
+    "content": {
+      "name": "Developer Franklin",
+      "wallet": "0x3E5e9111Ae8eB78Fe1CC3bb8915d5D461F3Ef9A9",
+      "skills": ["Paying people compliantly and stress free", "hybrid cash and crypto"],
+      "role": "HACKER",
+      "teamRole": "DEVELOPER"
+    }
+  },
+  "g": {
+    "content": {
+      "name": "Designer Gerrin",
+      "wallet": "0x28a8746e75304c0780E011BEd21C72cD78cd535E",
+      "skills": ["Creating the prettiest experiences you've ever seen"],
+      "role": "HACKER",
+      "teamRole": "DESIGNER"
+    }
+  },
+  "h": {
+    "content": {
+      "name": "Designer Harry",
+      "wallet": "0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E",
+      "skills": ["Creating the most user friendly experience you've ever heard"],
+      "role": "HACKER",
+      "teamRole": "DESIGNER"
+    }
+  },
+  "i": {
+    "content": {
+      "name": "Designer Igloo",
+      "wallet": "0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e",
+      "skills": ["I was once an extra on a tv show"],
+      "role": "HACKER",
+      "teamRole": "DESIGNER"
+    }
+  },
+  "j": {
+    "content": {
+      "name": "PM Jill",
+      "wallet": "0x610Bb1573d1046FCb8A70Bbbd395754cD57C2b60",
+      "skills": ["Moving tickets from one column to the next"],
+      "role": "HACKER",
+      "teamRole": "PROJECT_MANAGER"
+    }
+  },
+  "k": {
+    "content": {
+      "name": "PM Kareem",
+      "wallet": "0x855FA758c77D68a04990E992aA4dcdeF899F654A",
+      "skills": ["Gantt charts, and sometimes things that aren't gantt charts"],
+      "role": "HACKER",
+      "teamRole": "PROJECT_MANAGER"
+    }
+  },
+  "l": {
+    "content": {
+      "name": "PM Lemoine",
+      "wallet": "0xfA2435Eacf10Ca62ae6787ba2fB044f8733Ee843",
+      "skills": ["any project you need to buidl, i can make sure it's buitl"],
+      "role": "HACKER",
+      "teamRole": "PROJECT_MANAGER"
+    }
+  }
+}
