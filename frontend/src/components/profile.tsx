@@ -2,6 +2,12 @@ import Avatar from "components/avatar"
 import { useEffect, useState } from "react";
 import getComposeClient from "utils/compose";
 
+const ROLE_MAP = {
+  "DEVELOPER": "Developer",
+  "DESIGNER": "Designer",
+  "PROJECT_MANAGER": "Project Manager"
+}
+
 async function getComposeData(wallet: string) {
   const compose = await getComposeClient()
   const queryResponse = await compose.executeQuery(
@@ -11,6 +17,8 @@ async function getComposeData(wallet: string) {
           node {
             wallet
             skills
+            role
+            teamRole
           }
         }
       }
@@ -23,16 +31,18 @@ async function getComposeData(wallet: string) {
 }
 // profile component with compose data and hacker data from hackathon smart contract
 
-export default function Profile({ name, wallet, role}) {
+export default function Profile({ name, wallet }) {
   let [skills, setSkills] = useState("Loading...");
+  let [role, setRole] = useState("Loading...");
 
   useEffect(() => {
-    async function getSkills() {
+    async function setSkillsAndRole() {
       let data = await getComposeData(wallet);
       setSkills(data.skills.join(", "));
+      setRole(ROLE_MAP[data.teamRole]);
     }
 
-    getSkills();
+    setSkillsAndRole();
   }, []);
 
   return (
