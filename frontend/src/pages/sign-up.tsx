@@ -61,7 +61,7 @@ export default function SignUp() {
           hackathon.registerAsHacker(formData.get("role"))
         }
 
-        navigate("/active")
+        navigate("/team")
       })
     } else {
       alert("Please connect your wallet first.")
