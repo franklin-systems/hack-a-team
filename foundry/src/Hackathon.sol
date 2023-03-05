@@ -194,6 +194,21 @@ contract Hackathon{
         // check that hacker is on the caller's team
         require(teamsByCaptain[_hacker].captainAddress == msg.sender, "Hacker is not on the caller's team");
 
+        Team storage team = teamsByCaptain[msg.sender];
+
+        if(team.developer1 == _hacker){
+            team.developer1 = address(0);
+        }
+        else if(team.developer2 == _hacker){
+            team.developer2 = address(0);
+        }
+        else if(team.designer == _hacker){
+            team.designer = address(0);
+        }
+        else if(team.productManager == _hacker){
+            team.productManager = address(0);
+        }
+
         // update hacker to reflect they are no longer on a team
         hackersByAddress[_hacker].teamCaptain = address(0);
 
