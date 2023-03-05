@@ -221,6 +221,41 @@ contract TestHackathon is Test {
     }
 
     // test select winner
+    function testSelectWinner() external {
+        bootstrapHackathon();
+        address our_captain = captains[0];
+        changePrank(our_captain);
+        // add a developer to the team 
+        hackathon.selectTeamMember(developers[0]);
+        // check that developer1 is on the team 
+        assertTrue(hackathon.isOnTeam(developers[0]));
+        // check that developer1 is a developer 
+        (address team_captain, Hackathon.Role role) = hackathon.hackersByAddress(developers[0]);
+        assertTrue(role == Hackathon.Role.Developer);
+        // check that developer1 is on the correct team 
+        (address captainAddress,
+        address team_developer1,
+        address team_developer2,
+        address team_designer,
+        address team_productManager,
+        bool winner) = hackathon.teamsByCaptain(our_captain);
+        assertTrue(team_developer2 == developers[0]);
+        // change to hackathon owner 
+        changePrank(owner);
+        // progress time to stamp past end of hackathon
+        skip(300);
+        // select winner 
+        hackathon.declareWinner(our_captain);
+        // check that team is winner 
+        (captainAddress,
+        team_developer1,
+        team_developer2,
+        team_designer,
+        team_productManager,
+        winner) = hackathon.teamsByCaptain(our_captain);
+        assertTrue(winner == true);
+    }
+
 
     // test isWinner function 
 

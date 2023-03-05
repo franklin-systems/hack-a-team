@@ -219,7 +219,7 @@ contract Hackathon{
     }
 
     // declare winners
-    function declareWinner(address _captain) external view returns(bool){
+    function declareWinner(address _captain) external  returns(bool){
         // require the caller is the hackathonAdmin
         require(msg.sender == hackathonAdmin, "Caller is not the hackathon admin");
         // require that the hackathon has ended
@@ -227,6 +227,10 @@ contract Hackathon{
 
         // require that the captain is on a team
         require(teamsByCaptain[_captain].captainAddress == _captain, "Address not associated with a team");
+
+        Team storage team = teamsByCaptain[_captain];
+
+        team.winner = true;
 
         return true;
     }
