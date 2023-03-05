@@ -147,7 +147,7 @@ contract Hackathon{
         require(isHacker[_hacker], "Hacker is not registered");
 
         // check that hacker is not already on a team
-        require(hackersByAddress[_hacker].teamCaptain != address(0), "Hacker is already on a team");
+        require(hackersByAddress[_hacker].teamCaptain == address(0), "Hacker is already on a team");
         
         // check that hacker's skill is available on the team 
         if(hackersByAddress[_hacker].role == Role.Developer){

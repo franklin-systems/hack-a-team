@@ -153,7 +153,7 @@ contract TestHackathon is Test {
         address team_designer,
         address team_productManager,
         bool winner) = hackathon.teamsByCaptain(our_captain);
-        assertTrue(team_developer1 == developers[0]);
+        assertTrue(team_developer2 == developers[0]);
         // add a designer to the team 
         hackathon.selectTeamMember(designers[0]);
         // check that designers[0] is on the team 
@@ -187,6 +187,7 @@ contract TestHackathon is Test {
     }
 
     // test remove team member
+    
 
     // test select winner
 
