@@ -52,7 +52,7 @@ export default function Profile({ name, wallet }) {
         <div className="font-bold text-purple-500 text-xl mb-2">{name}</div>
         <p className="text-gray-700 text-base">Address: {wallet}</p>
         <p className="text-gray-700 text-base">Role: {role}</p>
-        <p className="text-gray-700 text-base">Skills: {skills} {skills} {skills} {skills} {skills} {skills} {skills} {skills} {skills}</p>
+        <p className="text-gray-700 text-base">Skills: {skills}</p>
       </div>
     </div>
   );
