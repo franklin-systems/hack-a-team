@@ -38,7 +38,6 @@ export default function Team() {
       <Profile
         name={auth.user.name}
         wallet={auth.wallet}
-        role="Developer"
       />
     </div>
   )
