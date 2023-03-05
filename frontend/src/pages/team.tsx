@@ -37,20 +37,37 @@ export default function Team() {
 
   useEffect(() => {
     async function getHackers() {
-      const compose = await getComposeClient()
-      const queryResponse = await compose.executeQuery(
-        `query{
-          hackathonProfileIndex(first: 100) {
-            edges {
-              node {
-                wallet
-                skills
-                role
-                teamRole
-              }
+      const teamRequiresDesigner = await hackathon.teamRequiresDesigner(auth.wallet)
+      const teamRequiresProductManager = await hackathon.teamRequiresProductManager(auth.wallet)
+      let developersRequired = await hackathon.getDevelopersRequired(auth.wallet)
+
+      const teamRoles = [];
+      if (teamRequiresDesigner) teamRoles.push("DESIGNER")
+      if (teamRequiresProductManager) teamRoles.push("PRODUCT_MANAGER")
+      if (developersRequired > 0) teamRoles.push("DEVELOPER")
+
+      const queryString = `query{
+        hackathonProfileIndex(first: 100, filter: { teamRole: {in: ${JSON.stringify(teamRoles)}}}) {
+          edges {
+            node {
+              wallet
+              skills
+              role
+              teamRole
             }
           }
-        }`)
+        }
+      }`
+
+      console.log("queryString", queryString);
+      
+      
+
+      const compose = await getComposeClient()
+      const queryResponse = await compose.executeQuery(queryString)
+      console.log("queryResponse", queryResponse);
+      
+      
       const edges = queryResponse.data.hackathonProfileIndex.edges
 
       setHackers(edges)

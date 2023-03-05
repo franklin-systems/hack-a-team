@@ -33,7 +33,8 @@ async function getComposeData(wallet: string) {
   const element = edges.find(element => {
     return !!element.node && element.node.wallet.toLowerCase() == wallet.toLowerCase()
   })
-  return element.node
+  
+  console.log("queryResponse", queryResponse)
 }
 // profile component with compose data and hacker data from hackathon smart contract
 
