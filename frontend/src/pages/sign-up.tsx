@@ -1,3 +1,5 @@
+import { useHackthonContract } from "hooks/useHackathon";
+import { useProvider } from "hooks/useProvider";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "utils/auth";
 
@@ -14,6 +16,15 @@ export default function SignUp() {
     if (auth.wallet) {
       auth.signin(formData.get("name") as string, () => {
         console.log("Signed in!")
+        const provider = useProvider()
+        const hackathon = useHackthonContract(provider, auth.wallet)
+
+        if (formData.get("role") === "captain") {
+          hackathon.registerAsCaptain(formData.get("role"))
+        } else {
+          hackathon.registerAsHacker(formData.get("role"))
+        }
+
         navigate("/active")
       })
     } else {
@@ -64,9 +75,9 @@ export default function SignUp() {
                   className="block w-full max-w-lg rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option value="">Select One...</option>
-                  <option value="project_manager">Project Manager</option>
-                  <option value="designer">Designer</option>
-                  <option value="developer">Developer</option>
+                  <option value="0">Developer</option>
+                  <option value="1">Designer</option>
+                  <option value="2">Project Manager</option>
                 </select>
               </div>
             </div>
