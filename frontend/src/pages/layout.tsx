@@ -40,7 +40,6 @@ export default function Layout() {
     setInterval(checkConnection, 1000)
   }, [])
 
-
   return (
     <div className="min-h-screen isolate bg-gray-900">
       { gradientBackground() }
@@ -50,7 +49,7 @@ export default function Layout() {
           <div className="flex p-2 rounded-xl bg-black">
             <a href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Franklin Hack-a-Team</span>
-              <img className="h-20" src="https://user-images.githubusercontent.com/1410181/221963178-ebddf3f7-1361-42b0-91dd-ea73a1412715.png" alt="" />
+              <img className="h-20" src="https://user-images.githubusercontent.com/26637346/222973953-cc80c9ba-ff4c-4a1e-924d-c7c2f6bdd793.png" alt="" />
             </a>
           </div>
           <div className="flex items-center space-x-4">
