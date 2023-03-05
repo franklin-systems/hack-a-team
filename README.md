@@ -23,6 +23,6 @@ Eric:
 Shaan/Nikhil/Eli:
 - fix `hackathon.registerAsCaptain` and `hackathon.registerAsHacker`
   - silently failing, no error
+  - FIX: use a brand new wallet
 - captain view:
-  - confirm adding to team works (hooked up but haven't been able to test since can't seed hackers/captains in ganache)
   - fetch team members and display at top

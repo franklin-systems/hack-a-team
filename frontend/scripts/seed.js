@@ -105,7 +105,7 @@ async function main() {
 
     const registeredCorrectly7 = await contract.hackersByAddress(designer1.address);
     console.log('Registered as designer1?', registeredCorrectly7);
-    
+
     // Designer2
     const designer2 = new ethers.Wallet("0x829e924fdf021ba3dbbc4225edfece9aca04b929d6e75613329ca6f1d31c0bb4", provider);
     tx.data = "0x7e101f780000000000000000000000000000000000000000000000000000000000000001";
@@ -165,9 +165,6 @@ async function main() {
 
     const registeredCorrectly12 = await contract.hackersByAddress(product3.address);
     console.log('Registered as designer3?', registeredCorrectly12);
-
-    
-
 }
 
 main();
