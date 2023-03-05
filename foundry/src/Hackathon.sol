@@ -57,6 +57,28 @@ contract Hackathon{
     }
 
 
+    function teamRequiresDesigner(address _hacker) external view returns(bool){
+        return teamsByCaptain[_hacker].designer == address(0) ? true : false;
+    }
+
+    function teamRequiresProductManager(address _hacker) external view returns(bool){
+        return teamsByCaptain[_hacker].productManager == address(0) ? true : false;
+    }
+
+    function getDevelopersRequired(address _hacker) external view returns(uint256){
+        // count number of developers on team
+        uint256 numberOfDevelopers = 0;
+        if(teamsByCaptain[_hacker].developer1 != address(0)){
+            numberOfDevelopers++;
+        }
+        if(teamsByCaptain[_hacker].developer2 != address(0)){
+            numberOfDevelopers++;
+        }
+
+        // return number of developers required
+        return 2 - numberOfDevelopers;
+    }
+
     // register as a captain 
     function registerAsCaptain(Role _roll) external returns(bool){
         // check if there are too many captains 
