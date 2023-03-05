@@ -3,7 +3,7 @@ import { Contract} from '@ethersproject/contracts'
 import { Web3Provider } from '@ethersproject/providers'
 
 
-export function useHackthonContract(provider: Web3Provider, account: string): Contract {
+export function useHackthonContract(provider: Web3Provider, account: string | null ): Contract {
 
     const address = import.meta.env.VITE_HACKATHON_CONTRACT_ADDRESS;
 
@@ -11,8 +11,11 @@ export function useHackthonContract(provider: Web3Provider, account: string): Co
         throw new Error('HACKATHON_CONTRACT_ADDRESS is not defined');
     }
 
-    const signer = provider.getSigner(account);
-    const contract = new Contract(address, HACKATHON_ABI, signer);
+    var contract = new Contract(address, HACKATHON_ABI, provider);
+
+    if (account) {
+        contract = contract.connect(provider.getSigner(account));
+    }
 
     return contract;
 }
