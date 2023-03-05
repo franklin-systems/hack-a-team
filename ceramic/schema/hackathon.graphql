@@ -9,7 +9,7 @@ enum TeamRole {
   PROJECT_MANAGER
 }
 
-type HackathonProfile @createModel(accountRelation: SINGLE, description: "Hackathon Profile for ETHDenver 2023") {
+type HackathonProfile @createModel(accountRelation: LIST, description: "Hackathon Profile for ETHDenver 2023") {
   name: String! @string(minLength: 1, maxLength: 128)
   wallet: String! @string(minLength: 42, maxLength: 42)
   role: Role!
