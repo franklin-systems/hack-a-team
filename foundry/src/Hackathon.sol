@@ -11,14 +11,14 @@ contract Hackathon{
 
     uint256 numberOfHackers;
 
-    
+
     enum Role {Developer, Designer, ProductManager}
 
-    // Hacker Struct 
+    // Hacker Struct
     struct Hacker {
-        // pointer to team captin address, 0 if not on a team 
+        // pointer to team captin address, 0 if not on a team
         address teamCaptain;
-        // their role on the team 
+        // their role on the team
         Role role;
     }
 
@@ -33,11 +33,11 @@ contract Hackathon{
         address productManager;
         bool winner;
     }
-    
-    // mapping of addresses registered as hackers 
+
+    // mapping of addresses registered as hackers
     mapping(address => bool) public isHacker;
 
-    // get hacker from address 
+    // get hacker from address
     mapping(address => Hacker) public hackersByAddress;
 
     // get team from address
@@ -52,7 +52,7 @@ contract Hackathon{
         hackathonEndTime = _hackathonEndTime;
     }
 
-    // check if a hacker has been selected for a team 
+    // check if a hacker has been selected for a team
     function isOnTeam(address _hacker) external view returns(bool){
         return hackersByAddress[_hacker].teamCaptain != address(0);
     }
@@ -85,10 +85,10 @@ contract Hackathon{
         return 2 - numberOfDevelopers;
     }
 
-    // register as a captain 
+    // register as a captain
     function registerAsCaptain(Role _roll) external returns(bool){
-        // check if there are too many captains 
-        require(teams.length < numberOfHackers / 3, "Too many captains");
+        // check if there are too many captains
+        // require(teams.length < numberOfHackers / 3, "Too many captains");
         // check if hacker is already registered
         require(isHacker[msg.sender] == false, "Hacker is already registered");
 
@@ -110,7 +110,7 @@ contract Hackathon{
 
         // add team to mapping of teams
         teamsByCaptain[msg.sender] = newTeam;
-        // create hacker profile 
+        // create hacker profile
         Hacker memory newHacker = Hacker(msg.sender, _roll);
         // add hacker to mapping of hackers
         hackersByAddress[msg.sender] = newHacker;
@@ -118,10 +118,10 @@ contract Hackathon{
         isHacker[msg.sender] = true;
 
 
-        return true;  
+        return true;
     }
 
-    // register as a hacker for hire 
+    // register as a hacker for hire
     function registerAsHacker(Role _roll) external returns(bool){
         // check if hacker is already registered
         require(!isHacker[msg.sender], "Hacker is already registered");
@@ -129,16 +129,16 @@ contract Hackathon{
         Hacker memory newHacker = Hacker(address(0), _roll);
         // add hacker to mapping of hackers
         hackersByAddress[msg.sender] = newHacker;
-        // add new hacker to the array of available hackers 
+        // add new hacker to the array of available hackers
         numberOfHackers++;
         // add hacker to the mapping of registered hackers
         isHacker[msg.sender] = true;
 
-        // return something 
+        // return something
         return true;
     }
 
-    // select a team member 
+    // select a team member
     function selectTeamMember(address _hacker) external returns(bool){
         // requirer that caller is a captain
         require(teamsByCaptain[msg.sender].captainAddress == msg.sender, "Caller is not a captain");
@@ -148,8 +148,8 @@ contract Hackathon{
 
         // check that hacker is not already on a team
         require(hackersByAddress[_hacker].teamCaptain == address(0), "Hacker is already on a team");
-        
-        // check that hacker's skill is available on the team 
+
+        // check that hacker's skill is available on the team
         if(hackersByAddress[_hacker].role == Role.Developer){
             // check that there is an open developer spot
             require(teamsByCaptain[msg.sender].developer1 == address(0) || teamsByCaptain[msg.sender].developer2 == address(0), "Team is full");
@@ -183,7 +183,7 @@ contract Hackathon{
         return true;
     }
 
-    // remove a team member 
+    // remove a team member
     function removeTeamMember(address _hacker) external returns(bool){
         // require that the hackathon hasnt started
         require(block.timestamp < hackathonStartTime, "Conference has started, cannot remove team member");
