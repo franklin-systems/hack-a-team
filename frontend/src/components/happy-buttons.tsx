@@ -1,14 +1,25 @@
 import getComposeClient from "utils/compose";
+import { ethers } from "ethers";
+import { getAccountId } from '@didtools/pkh-ethereum'
 
 async function handleClick(event) {
-  const compose = await getComposeClient()
   event.preventDefault();
+
+  const ethProvider = new ethers.providers.Web3Provider(window.ethereum).provider;
+  const addresses = await ethProvider.request({ method: 'eth_requestAccounts' })
+  const accountId = await getAccountId(ethProvider, addresses[0])
+  const wallet = accountId.address
+
+  const compose = await getComposeClient()
   const queryResponse = await compose.executeQuery(
     `query{
       hackathonProfileIndex(first: 10) {
         edges {
           node {
-            name
+            wallet
+            skills
+            strengths
+            weaknesses
           }
         }
       }
@@ -19,15 +30,20 @@ async function handleClick(event) {
     mutation CreateNewHackathonProfile($i: CreateHackathonProfileInput!){
       createHackathonProfile(input: $i){
         document{
-          id
-          name
+          wallet
+          skills
+          strengths
+          weaknesses
         }
       }
     }
   `, {
     "i": {
       "content": {
-        "name": "Random Name " + Math.floor(Math.random() * 10000)
+        "wallet": wallet,
+        "skills": ["Bad at life"],
+        "strengths": "None.",
+        "weaknesses": "All."
       }
     }
   });

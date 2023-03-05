@@ -1,3 +1,6 @@
 type HackathonProfile @createModel(accountRelation: SINGLE, description: "Hackathon Profile for ETHDenver 2023") {
-  name: String! @string(minLength: 1, maxLength: 100)
+  wallet: String! @string(minLength: 42, maxLength: 42)
+  skills: [String!]! @list(minLength: 1, maxLength: 64) @string(minLength: 1, maxLength: 64)
+  strengths: String! @string(minLength: 1, maxLength: 500)
+  weaknesses: String! @string(minLength: 1, maxLength: 500)
 }
