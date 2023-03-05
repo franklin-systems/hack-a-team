@@ -46,7 +46,7 @@ export default function Profile({ name, wallet }) {
   }, []);
 
   return (
-    <div className="flex flex-col items-center rounded-lg bg-black shadow-lg p-4">
+    <div className="flex flex-col items-center rounded-lg bg-black shadow-lg p-4 mx-4">
       <Avatar size="large"/>
       <div className="px-6 py-4">
         <div className="font-bold text-purple-500 text-xl mb-2">{name}</div>

@@ -1,5 +1,6 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { setCookie } from "../utils/cookies";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { Outlet } from "react-router-dom"
 import { useProvider } from "../hooks/useProvider"
 import { useAuth } from "utils/auth";
@@ -14,6 +15,7 @@ export default function Layout() {
     const provider = useProvider()
     const accounts = await provider.listAccounts()
     auth.setWallet(accounts[0])
+    setCookie("wallet", accounts[0]);
   }
 
   async function connect() {
@@ -22,6 +24,7 @@ export default function Layout() {
 
     if (account.length) {
       auth.setWallet(account[0])
+      setCookie("wallet", account[0]);
     }
   }
 

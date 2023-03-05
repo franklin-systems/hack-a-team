@@ -24,21 +24,29 @@ export default function Team() {
       const captain = hackerObject.captain;
       // teammate struct
       const teammates = await hackathon.teamsByCaptain(captain);
+      console.log("teammates", teammates)
       setTeammates(teammates);
     }
 
     getIsHacker();
     // getTeammates();
- }, [])
-
+  }, [])
 
   return (
     <div className="flex flex-col items-center justify-center h-full">
       <h1 className=" mb-6 text-4xl font-bold text-white">Team</h1>
-      <Profile
-        name={auth.user.name}
-        wallet={auth.wallet}
-      />
+      <div className="flex items-center justify-between">
+        <Profile
+          name={auth.user.name}
+          wallet={auth.wallet}
+        />
+        <Profile
+          name={auth.user.name}
+          wallet={auth.wallet}
+        />
+      </div>
+
+      <h2 className="mt-12 mb-4 text-2xl font-bold text-white">Pick New Teammates</h2>
     </div>
   )
 }
