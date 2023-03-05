@@ -1,0 +1,110 @@
+mutation CreateNewHackathonProfile($a: CreateHackathonProfileInput!, $b: CreateHackathonProfileInput!, $c: CreateHackathonProfileInput!, $d: CreateHackathonProfileInput!, $e: CreateHackathonProfileInput!, $f: CreateHackathonProfileInput!, $g: CreateHackathonProfileInput!, $h: CreateHackathonProfileInput!, $i: CreateHackathonProfileInput!, $j: CreateHackathonProfileInput!, $k: CreateHackathonProfileInput!, $l: CreateHackathonProfileInput!){
+  createA: createHackathonProfile(input: $a){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createB: createHackathonProfile(input: $b){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createC: createHackathonProfile(input: $c){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createD: createHackathonProfile(input: $d){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createE: createHackathonProfile(input: $e){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createF: createHackathonProfile(input: $f){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createG: createHackathonProfile(input: $g){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createH: createHackathonProfile(input: $h){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createI: createHackathonProfile(input: $i){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createJ: createHackathonProfile(input: $j){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createK: createHackathonProfile(input: $k){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+  createL: createHackathonProfile(input: $l){
+    document{
+      name
+      wallet
+      skills
+      role
+      teamRole
+    }
+  }
+}
