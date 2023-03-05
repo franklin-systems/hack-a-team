@@ -1,4 +1,4 @@
-import { useHackthonContract } from "hooks/useHackathon";
+import { useHackthon } from "hooks/useHackathon";
 import { useProvider } from "hooks/useProvider";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "utils/auth";
@@ -17,7 +17,7 @@ export default function SignUp() {
       auth.signin(formData.get("name") as string, () => {
         console.log("Signed in!")
         const provider = useProvider()
-        const hackathon = useHackthonContract(provider, auth.wallet)
+        const hackathon = useHackthon(provider, auth.wallet)
 
         if (formData.get("role") === "captain") {
           hackathon.registerAsCaptain(formData.get("role"))
