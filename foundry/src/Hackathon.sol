@@ -187,6 +187,16 @@ contract Hackathon{
     }
 
     // is winner, function that makes it easy to check if an individual hacker was part of a winning team
+    function isWinner(address _hacker) external view returns(bool){
+        // require that the hackathon has ended
+        require(block.timestamp > hackathonEndTime, "Hackathon has not ended yet");
 
+        // require that the hacker is on a team
+        require(hackersByAddress[_hacker].teamCaptain != address(0), "Hacker is not on a team");
+
+        // require that the team is a winner
+        bool winner = teamsByCaptain[hackersByAddress[_hacker].teamCaptain].winner;
+
+        return winner;
+    }
 }
-

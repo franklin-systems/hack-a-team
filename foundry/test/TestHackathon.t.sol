@@ -17,6 +17,7 @@ contract TestHackathon is Test {
     address[] developers;
     address[] designers;
     address[] productManagers;
+    address[] captains;
 
     function setUp() public{
         startHoax(owner);
@@ -27,7 +28,7 @@ contract TestHackathon is Test {
 
     //function to bootstrap users and tests 
     //add enough hackers to create 10 teams
-    function bootstrapHackathon() external {
+    function bootstrapHackathon() internal {
         // create many different user types 
         for(uint i = 0; i < 10; i++){
             address newAddress = makeAddr(string(abi.encodePacked("developer", i)));
@@ -51,6 +52,7 @@ contract TestHackathon is Test {
         // create teams with captains who are developers (for ease of use)
         for(uint i = 0; i < 10; i++){
             address newAddress = makeAddr(string(abi.encodePacked("captain", i)));
+            captains.push(newAddress);
             changePrank(newAddress);
             hackathon.registerAsCaptain(Hackathon.Role.Developer);
         }
@@ -133,8 +135,58 @@ contract TestHackathon is Test {
     }
 
     // test select team member 
+    function testSelectTeamMemeber() external {
+        bootstrapHackathon();
+        address our_captain = captains[0];
+        changePrank(our_captain);
+        // add a developer to the team 
+        hackathon.selectTeamMember(developers[0]);
+        // check that developer1 is on the team 
+        assertTrue(hackathon.isOnTeam(developers[0]));
+        // check that developer1 is a developer 
+        (address team_captain, Hackathon.Role role) = hackathon.hackersByAddress(developers[0]);
+        assertTrue(role == Hackathon.Role.Developer);
+        // check that developer1 is on the correct team 
+        (address captainAddress,
+        address team_developer1,
+        address team_developer2,
+        address team_designer,
+        address team_productManager,
+        bool winner) = hackathon.teamsByCaptain(our_captain);
+        assertTrue(team_developer1 == developers[0]);
+        // add a designer to the team 
+        hackathon.selectTeamMember(designers[0]);
+        // check that designers[0] is on the team 
+        assertTrue(hackathon.isOnTeam(designers[0]));
+        // check that designers[0] is a designers[0] 
+        (team_captain, role) = hackathon.hackersByAddress(designers[0]);
+        assertTrue(role == Hackathon.Role.Designer);
+        // check that designers[0] is on the correct team 
+        (captainAddress,
+        team_developer1,
+        team_developer2,
+        team_designer,
+        team_productManager,
+        winner) = hackathon.teamsByCaptain(our_captain);
+        assertTrue(team_designer == designers[0]);
+        // add a product manager to the team 
+        hackathon.selectTeamMember(productManagers[0]);
+        // check that product manager is on the team 
+        assertTrue(hackathon.isOnTeam(productManagers[0]));
+        // check that product manager is a product manager 
+        (team_captain, role) = hackathon.hackersByAddress(productManagers[0]);
+        assertTrue(role == Hackathon.Role.ProductManager);
+        // check that product manager is on the correct team 
+        (captainAddress,
+        team_developer1,
+        team_developer2,
+        team_designer,
+        team_productManager,
+        winner) = hackathon.teamsByCaptain(our_captain);
+        assertTrue(team_productManager == productManagers[0]);
+    }
 
-    // test remove team member 
+    // test remove team member
 
     // test select winner
 
