@@ -2,24 +2,60 @@ import { useHackthon } from "hooks/useHackathon";
 import { useProvider } from "hooks/useProvider";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "utils/auth";
+import getComposeClient from "utils/compose";
+import { ethers } from "ethers";
+import { getAccountId } from '@didtools/pkh-ethereum'
+
+
+const TEAM_ROLE = ["DEVELOPER", "DESIGNER", "PROJECT_MANAGER"];
 
 
 export default function SignUp() {
   let auth = useAuth();
   let navigate = useNavigate();
 
-  const onSubmit = function(event: React.FormEvent<HTMLFormElement>) {
+  const onSubmit = async function(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     let formData = new FormData(event.currentTarget);
-
+    console.log(formData)
+    const ethProvider = new ethers.providers.Web3Provider(window.ethereum).provider;
+    const addresses = await ethProvider.request({ method: 'eth_requestAccounts' })
+    const accountId = await getAccountId(ethProvider, addresses[0])
+    const wallet = accountId.address
+  
+    const compose = await getComposeClient()
+    const response = await compose.executeQuery(`
+      mutation CreateNewHackathonProfile($i: CreateHackathonProfileInput!){
+        createHackathonProfile(input: $i){
+          document{
+            name
+            wallet
+            skills
+            role
+            teamRole
+          }
+        }
+      }
+    `, {
+      "i": {
+        "content": {
+          "name": formData.get("name"),
+          "wallet": wallet,
+          "skills": [formData.get("skills")],
+          "role": formData.get("user-type"),
+          "teamRole": TEAM_ROLE[formData.get("role")]
+        }
+      }
+    });
+    console.log(response)
     if (auth.wallet) {
       auth.signin(formData.get("name") as string, () => {
         console.log("Signed in!")
         const provider = useProvider()
         const hackathon = useHackthon(provider, auth.wallet)
 
-        if (formData.get("role") === "captain") {
+        if (formData.get("role") === "CAPTAIN") {
           hackathon.registerAsCaptain(formData.get("role"))
         } else {
           hackathon.registerAsHacker(formData.get("role"))
@@ -113,13 +149,13 @@ export default function SignUp() {
 
           <div className="flex justify-between">
             <div className="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700 grow mr-4">
-              <input defaultChecked id="user-type-hacker" type="radio" value="hacker" name="user-type" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+              <input defaultChecked id="user-type-hacker" type="radio" value="HACKER" name="user-type" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
               <label htmlFor="user-type-hacker" className="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                 Hacker
               </label>
             </div>
             <div className="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700 grow ml-4">
-              <input id="user-type-captain" type="radio" value="captain" name="user-type" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+              <input id="user-type-captain" type="radio" value="CAPTAIN" name="user-type" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
               <label htmlFor="user-type-captain" className="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                 Captain
               </label>
