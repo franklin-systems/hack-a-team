@@ -22,6 +22,10 @@ compile-schema:
 remove-volumes:
 	docker compose down -v
 
+remove-data-volumes:
+	docker compose down
+	docker volume rm hack-a-team_ganache-data
+
 seed:
 	docker compose exec frontend yarn seed
 
