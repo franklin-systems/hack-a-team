@@ -25,7 +25,7 @@ async function getComposeData(wallet: string) {
     }`)
   const edges = queryResponse.data.hackathonProfileIndex.edges
   const element = edges.find(element => {
-    return !!element.node && element.node.wallet == wallet.toLowerCase()
+    return !!element.node && element.node.wallet.toLowerCase() == wallet.toLowerCase()
   })
   return element.node
 }
