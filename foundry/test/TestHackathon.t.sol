@@ -254,14 +254,8 @@ contract TestHackathon is Test {
         team_productManager,
         winner) = hackathon.teamsByCaptain(our_captain);
         assertTrue(winner == true);
+
+        assertTrue(hackathon.isWinner(our_captain));
     }
 
-
-    // test isWinner function 
-
-
-
-    function test() public {
-        assertTrue(true);
-    }
 }
