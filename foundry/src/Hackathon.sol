@@ -56,6 +56,10 @@ contract Hackathon{
         return hackersByAddress[_hacker].teamCaptain != address(0) ? true : false;
     }
 
+    // get team by captain address
+    function getTeamByCaptain(address _hacker) external view returns(Team memory){
+        return teamsByCaptain[_hacker];
+    }
 
     function teamRequiresDesigner(address _hacker) external view returns(bool){
         return teamsByCaptain[_hacker].designer == address(0) ? true : false;
