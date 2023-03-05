@@ -24,6 +24,7 @@ contract Hackathon{
 
     // Team struct (this design constrains team makeup, could be changed to allow any makeup)
     struct Team{
+
         address captainAddress;
         // developers split into distinct members instead of array because of how solidity returns teams from function calls (doesn't return arrays)
         address developer1;
@@ -55,6 +56,7 @@ contract Hackathon{
     function isOnTeam(address _hacker) external view returns(bool){
         return hackersByAddress[_hacker].teamCaptain != address(0);
     }
+
 
     // get team by captain address
     function getTeamByCaptain(address _hacker) external view returns(Team memory){
@@ -114,6 +116,7 @@ contract Hackathon{
         hackersByAddress[msg.sender] = newHacker;
         // add new hacker to the array of hackers
         isHacker[msg.sender] = true;
+
 
         return true;  
     }

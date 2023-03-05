@@ -18,8 +18,8 @@ export default function SignUp() {
     event.preventDefault()
 
     let formData = new FormData(event.currentTarget);
-    console.log(formData)
-    const ethProvider = new ethers.providers.Web3Provider(window.ethereum).provider;
+
+    const ethProvider = useProvider().provider;
     const addresses = await ethProvider.request({ method: 'eth_requestAccounts' })
     const accountId = await getAccountId(ethProvider, addresses[0])
     const wallet = accountId.address
