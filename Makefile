@@ -1,7 +1,7 @@
 include .env
 export $(shell sed 's/=.*//' .env)
 
-COMPOSEDB = docker compose run ceramic composedb
+COMPOSEDB = docker compose run --rm ceramic composedb
 
 down:
 	docker compose down

@@ -43,17 +43,23 @@ export default function SignUp() {
         }
       });
 
-      auth.signin(formData.get("name") as string, () => {
+      auth.signin(formData.get("name") as string, async () => {
         console.log("Signed in!")
         const provider = useProvider()
         const hackathon = useHackthon(provider, auth.wallet)
 
-        if (formData.get("role") === "CAPTAIN") {
-          hackathon.registerAsCaptain(formData.get("role"))
+        if (formData.get("user-type") === "CAPTAIN") {
+          console.log("starting txn", parseInt(formData.get("role")))
+          await hackathon.registerAsCaptain(parseInt(formData.get("role")))
+          console.log("done txn - NOT MAKING IT HERE")
+
         } else {
-          hackathon.registerAsHacker(formData.get("role"))
+          console.log("starting txn", parseInt(formData.get("role")))
+          await hackathon.registerAsHacker(parseInt(formData.get("role")))
+          console.log("done txn - NOT MAKING IT HERE")
         }
 
+        console.log("navigating to /team")
         navigate("/team")
       })
     } else {

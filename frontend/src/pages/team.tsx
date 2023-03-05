@@ -22,6 +22,8 @@ export default function Team() {
   let [hackers, setHackers] = useState([]);
   let [ignored, setIgnored] = useState([]);
 
+  let [team, setTeam] = useState(null);
+
   let addToTeam = () => {
     hackathon.selectTeamMember(currentOption.node.wallet)
     setIgnored([...ignored, currentOption.node.wallet])
@@ -55,6 +57,7 @@ export default function Team() {
     async function getTeam() {
       console.log("auth.wallet", auth.wallet)
       let team = await hackathon.isHacker(auth.wallet)
+      setTeam(team)
       console.log("team", team)
     }
 
