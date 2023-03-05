@@ -3,8 +3,6 @@ import { useProvider } from "hooks/useProvider";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "utils/auth";
 import getComposeClient from "utils/compose";
-import { ethers } from "ethers";
-import { getAccountId } from '@didtools/pkh-ethereum'
 
 
 const TEAM_ROLE = ["DEVELOPER", "DESIGNER", "PROJECT_MANAGER"];
@@ -19,37 +17,32 @@ export default function SignUp() {
 
     let formData = new FormData(event.currentTarget);
 
-    const ethProvider = useProvider().provider;
-    const addresses = await ethProvider.request({ method: 'eth_requestAccounts' })
-    const accountId = await getAccountId(ethProvider, addresses[0])
-    const wallet = accountId.address
-  
-    const compose = await getComposeClient()
-    const response = await compose.executeQuery(`
-      mutation CreateNewHackathonProfile($i: CreateHackathonProfileInput!){
-        createHackathonProfile(input: $i){
-          document{
-            name
-            wallet
-            skills
-            role
-            teamRole
+    if (auth.wallet) {
+      const compose = await getComposeClient()
+      await compose.executeQuery(`
+        mutation CreateNewHackathonProfile($i: CreateHackathonProfileInput!){
+          createHackathonProfile(input: $i){
+            document{
+              name
+              wallet
+              skills
+              role
+              teamRole
+            }
           }
         }
-      }
-    `, {
-      "i": {
-        "content": {
-          "name": formData.get("name"),
-          "wallet": wallet,
-          "skills": [formData.get("skills")],
-          "role": formData.get("user-type"),
-          "teamRole": TEAM_ROLE[formData.get("role")]
+      `, {
+        "i": {
+          "content": {
+            "name": formData.get("name"),
+            "wallet": auth.wallet,
+            "skills": [formData.get("skills")],
+            "role": formData.get("user-type"),
+            "teamRole": TEAM_ROLE[formData.get("role")]
+          }
         }
-      }
-    });
-    console.log(response)
-    if (auth.wallet) {
+      });
+
       auth.signin(formData.get("name") as string, () => {
         console.log("Signed in!")
         const provider = useProvider()
