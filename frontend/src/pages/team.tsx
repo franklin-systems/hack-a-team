@@ -75,9 +75,17 @@ export default function Team() {
 
   let currentOption: any = null;
   let currentRole = "hacker";
+  let teamFull = false;
   if (currentHacker && currentHacker.node.role === "CAPTAIN") {
     currentOption = getFirstOption(hackers, ignored)
     currentRole = "captain"
+
+    teamFull = (
+      team.developer1 != ZERO_ADDRESS &&
+      team.developer2 != ZERO_ADDRESS &&
+      team.designer != ZERO_ADDRESS &&
+      team.productManager != ZERO_ADDRESS
+    )
   }
 
 
@@ -127,7 +135,7 @@ export default function Team() {
         </div>
       )}
 
-      {currentOption && (
+      {currentOption && !teamFull && (
         <div>
           <h2 className="text-center mt-12 mb-4 text-2xl font-bold text-white">Pick New Teammate:</h2>
           <div className="flex flex-col items-center rounded-lg bg-black shadow-lg p-4 py-8 mx-4">
