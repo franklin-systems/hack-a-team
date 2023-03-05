@@ -17,12 +17,6 @@
     - pull in `ceramic/seed/seed-query.graphql`
 
 ## Remaining Work
-Eric:
-- seed first 12 hackers in Ganache
-
-Shaan/Nikhil/Eli:
-- fix `hackathon.registerAsCaptain` and `hackathon.registerAsHacker`
-  - silently failing, no error
-  - FIX: use a brand new wallet
-- captain view:
-  - fetch team members and display at top
+- fix visual styles when team has 3-4 people
+- filter available options based on roles on team
+- show current team in worker view
