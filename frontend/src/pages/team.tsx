@@ -3,30 +3,9 @@ import { useHackthon } from "hooks/useHackathon";
 import { useProvider } from "hooks/useProvider";
 import { useEffect, useState } from "react";
 import { useAuth } from "utils";
-import getComposeClient from "utils/compose";
-
-async function getComposeData(wallet: string) {
-  const compose = await getComposeClient()
-  const queryResponse = await compose.executeQuery(
-    `query{
-      hackathonProfileIndex($wallet: String) {
-        edges {
-          node {
-            skills
-          }
-        }
-      }
-    }`,
-    {
-      "wallet": wallet
-    }
-  )
-  return queryResponse
-}
 
 export default function Team() {
   let [isHacker, setIsHacker] = useState(false);
-  let [skills, setSkills] = useState(null);
   let [teammates, setTeammates] = useState(null);
 
   let auth = useAuth();
@@ -39,11 +18,6 @@ export default function Team() {
       console.log(isHacker)
       setIsHacker(isHacker);
     }
-    
-    async function getSkills() {
-      let data = await getComposeData(auth.wallet);
-      // setSkills(data);
-    }
 
     async function getTeammates() {
       const hackerObject = await hackathon.hackersByAddress(auth.wallet)
@@ -54,7 +28,6 @@ export default function Team() {
     }
 
     getIsHacker();
-    // getSkills();
     // getTeammates();
  }, [])
 
@@ -65,7 +38,6 @@ export default function Team() {
       <Profile
         name={auth.user.name}
         wallet={auth.wallet}
-        skills="Payroll software"
         role="Developer"
       />
     </div>
