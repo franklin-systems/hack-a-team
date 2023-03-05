@@ -49,17 +49,12 @@ export default function SignUp() {
         const hackathon = useHackthon(provider, auth.wallet)
 
         if (formData.get("user-type") === "CAPTAIN") {
-          console.log("starting txn", parseInt(formData.get("role")))
           await hackathon.registerAsCaptain(parseInt(formData.get("role")))
-          console.log("done txn - NOT MAKING IT HERE")
 
         } else {
-          console.log("starting txn", parseInt(formData.get("role")))
           await hackathon.registerAsHacker(parseInt(formData.get("role")))
-          console.log("done txn - NOT MAKING IT HERE")
         }
 
-        console.log("navigating to /team")
         navigate("/team")
       })
     } else {
@@ -75,10 +70,10 @@ export default function SignUp() {
             <h3 className="text-base font-semibold leading-6 text-white">
               Hacker Profile Information
             </h3>
-            <p className="mt-2 max-w-2xl text-sm text-gray-400">
+            <p className="mt-2 max-w-2xl text-sm text-gray-300">
               Whether you're a <span className="italic">Hacker</span> or a <span className="italic">Captain</span>, fill out your profile information.
             </p>
-            <p className="mt-2 max-w-2xl text-sm text-gray-400">
+            <p className="mt-2 max-w-2xl text-sm text-gray-300">
               This information will be linked with your wallet address: 0x00..00, and shared with prospective captains and fellow team members.
             </p>
           </div>
@@ -94,7 +89,7 @@ export default function SignUp() {
                   name="name"
                   id="name"
                   autoComplete="name"
-                  className="block w-full max-w-lg rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full max-w-lg rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -125,7 +120,7 @@ export default function SignUp() {
                 <textarea
                   name="skills"
                   id="skills"
-                  className="block w-full max-w-lg rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full max-w-lg rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -138,10 +133,10 @@ export default function SignUp() {
             <h3 className="text-base font-semibold leading-6 text-white">
               What role are you joining as?
             </h3>
-            <p className="mt-2 max-w-2xl text-sm text-gray-400">
+            <p className="mt-2 max-w-2xl text-sm text-gray-300">
               A <span className="italic">Hacker</span> is a team member who is looking to join a team and contribute to a project.
             </p>
-            <p className="mt-2 max-w-2xl text-sm text-gray-400">
+            <p className="mt-2 max-w-2xl text-sm text-gray-300">
               A <span className="italic">Captain</span> is a team member who is looking to recruit a team and build a project.
             </p>
           </div>

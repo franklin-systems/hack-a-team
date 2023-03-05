@@ -3,7 +3,7 @@ import Profile from "components/profile";
 import { useHackthon } from "hooks/useHackathon";
 import { useProvider } from "hooks/useProvider";
 import { useEffect, useState } from "react";
-import { useAuth } from "utils";
+import { shortWallet, useAuth } from "utils";
 import getComposeClient from "utils/compose";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
@@ -43,6 +43,7 @@ export default function Team() {
           hackathonProfileIndex(first: 100) {
             edges {
               node {
+                name
                 wallet
                 skills
                 role
@@ -57,10 +58,8 @@ export default function Team() {
     }
 
     async function getTeam() {
-      console.log("auth.wallet", auth.wallet)
       let team = await hackathon.teamsByCaptain(auth.wallet)
       setTeam(team)
-      console.log("team", team)
     }
 
     getHackers();
@@ -87,7 +86,6 @@ export default function Team() {
       team.productManager != ZERO_ADDRESS
     )
   }
-
 
   return (
     <div className="flex flex-col items-center justify-center h-full">
@@ -138,13 +136,13 @@ export default function Team() {
       {currentOption && !teamFull && (
         <div>
           <h2 className="text-center mt-12 mb-4 text-2xl font-bold text-white">Pick New Teammate:</h2>
-          <div className="flex flex-col items-center rounded-lg bg-black shadow-lg p-4 py-8 mx-4">
+          <div className="flex flex-col items-center rounded-lg bg-black shadow-lg p-4 py-8 mx-4 w-[450px]">
             <Avatar size="large"/>
-            <div className="px-6 py-4">
+            <div className="px-6 py-4 pb-8">
               <div className="font-bold text-purple-500 text-xl mb-2">{currentOption.node.name}</div>
-              <p className="text-gray-700 text-base">Address: {currentOption.node.wallet}</p>
-              <p className="text-gray-700 text-base">Role: {currentOption.node.teamRole}</p>
-              <p className="text-gray-700 text-base">Skills: {currentOption.node.skills}</p>
+              <p className="text-gray-400 text-base">Address: {shortWallet(currentOption.node.wallet)}</p>
+              <p className="text-gray-400 text-base">Role: {currentOption.node.teamRole}</p>
+              <p className="text-gray-400 text-base">Skills: {currentOption.node.skills}</p>
             </div>
 
             <div className="flex justify-around w-[80%]">

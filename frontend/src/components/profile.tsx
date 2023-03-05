@@ -1,7 +1,7 @@
 import Avatar from "components/avatar"
 import { useEffect, useState } from "react";
 import getComposeClient from "utils/compose";
-import { classNames } from 'utils'
+import { shortWallet, classNames } from 'utils'
 
 const ROLE_MAP = {
   "DEVELOPER": "Developer",
@@ -38,8 +38,6 @@ async function getComposeData(wallet: string) {
 // profile component with compose data and hacker data from hackathon smart contract
 
 export default function Profile({ wallet, highlight=false }) {
-  console.log("wallet", wallet)
-
   let [name, setName] = useState("Loading...");
   let [skills, setSkills] = useState("Loading...");
   let [role, setRole] = useState("Loading...");
@@ -59,15 +57,15 @@ export default function Profile({ wallet, highlight=false }) {
 
   return (
     <div key={wallet} className={classNames(
-      "flex flex-col items-center rounded-lg bg-black shadow-lg p-4 mx-4 w-[500px] h-[300px]",
+      "flex flex-col items-center rounded-lg bg-black shadow-lg p-4 mx-4 w-[400px] h-[300px]",
       highlight && "border border-green-600"
     )}>
       <Avatar size="large"/>
       <div className="px-6 pt-8">
-        <p className="text-gray-700 text-base">Address: {wallet}</p>
-        <p className="text-gray-700 text-base">Name: {name}</p>
-        <p className="text-gray-700 text-base">Role: {role}</p>
-        <p className="text-gray-700 text-base">Skills: {skills}</p>
+        <p className="text-gray-400 text-base">Address: {shortWallet(wallet)}</p>
+        <p className="text-gray-400 text-base">Name: {name}</p>
+        <p className="text-gray-400 text-base">Role: {role}</p>
+        <p className="text-gray-400 text-base">Skills: {skills}</p>
       </div>
     </div>
   );
