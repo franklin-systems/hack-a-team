@@ -1,9 +1,5 @@
-# ETH Denver Hackathon
-## Tech Stack
-- JS
-- Foundry
-- ComposeDB
-- Lens Protocol
+# Hack A Team
+An app that brings Tinder-like functionality to selecting a team for hackathons.
 
 ## Startup
 - docker compose up
