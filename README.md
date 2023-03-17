@@ -1,4 +1,4 @@
-# Hack A Team
+# Hack-a-Team
 An app that brings Tinder-like functionality to selecting a team for hackathons.
 
 ## Startup
